@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         name="CM1"
+         updateCheck="false"
+         maxBytesLocalHeap="16M">
+
+    <!--
+      This is a default configuration, it is re-configured by the CacheConfiguration Spring Bean, using the
+      properties from the resources/config/*.yml files.
+    -->
+
+    <diskStore path="java.io.tmpdir"/>
+
+    <defaultCache
+            eternal="false"
+            overflowToDisk="false"
+            />
+
+    <cache name="com.dgstack.eg.jhipster.domain.User"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Authority"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.User.authorities"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.PersistentToken"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.User.persistentTokens"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Region"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Country"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Location"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Department"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Department.employees"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Task"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Task.jobs"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Employee"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Employee.jobs"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Job"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.Job.tasks"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.dgstack.eg.jhipster.domain.JobHistory"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <!-- jhipster-needle-ehcache-add-entry -->
+</ehcache>

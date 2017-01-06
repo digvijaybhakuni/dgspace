@@ -1,0 +1,10 @@
+version: '2'
+services:
+    jhmonoapp-elasticsearch:
+        container_name: jhmonoapp-elasticsearch
+        image: elasticsearch:2.4.1
+        # volumes:
+        #     - ~/volumes/jhipster/jhMonoApp/elasticsearch/:/usr/share/elasticsearch/data/
+        ports:
+            - 9200:9200
+            - 9300:9300

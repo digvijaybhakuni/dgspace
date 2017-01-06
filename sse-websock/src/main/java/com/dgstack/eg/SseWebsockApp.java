@@ -1,0 +1,15 @@
+package com.dgstack.eg;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@ComponentScan("com.dgstack.eg")
+public class SseWebsockApp {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SseWebsockApp.class, args);
+	}
+
+}
