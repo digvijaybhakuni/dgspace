@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+	<h1>Getting server updates</h1>
+	<ul id="result"></ul>
+	<div id="error"></div>
+
+	<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+	<script>
+		(function($) {
+			function connect() {
+				var source = new EventSource("api/events/ssevents");
+				source.onmessage = function(event) {
+					$("#result").append("<li>"+event.data+"</li>")
+					console.log(event);
+				};
+
+			}
+			if (typeof (EventSource) !== "undefined") {
+				connect();
+			} else {
+				$("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+			}
+		})(jQuery);
+	</script>
+
+
+</body>
+</html>
