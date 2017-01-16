@@ -16,7 +16,6 @@ import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.DeploymentManager;
 
-
 /**
  * @author dbhakuni
  *
@@ -24,36 +23,32 @@ import io.undertow.servlet.api.DeploymentManager;
 public class App {
 
 	private static Undertow server;
-	
+
 	public static void main(String[] args) throws ServletException {
-        startContainer(9090);
-    }
-	
-	public static void stopContainer(){
-        server.stop();
-    }
-	
+		startContainer(9090);
+	}
+
+	public static void stopContainer() {
+		server.stop();
+	}
+
 	public static void startContainer(int port) throws ServletException {
 		io.undertow.servlet.api.ServletContainer servletContainer = Servlets.defaultContainer();
 
 		DeploymentInfo di = Servlets.deployment().setClassLoader(App.class.getClassLoader()).setContextPath("/jaxrx")
 				.setDeploymentName("jaxrx-demo-1.0")
-				.addServlets(servlet("jerseyServlet", ServletContainer.class).setLoadOnStartup(1).setAsyncSupported(true)
-						.addInitParam("javax.ws.rs.Application", JerseyApp.class.getName()).addMapping("/api/*"));;
+				.addServlets(servlet("jerseyServlet", ServletContainer.class).setLoadOnStartup(1)
+						.setAsyncSupported(true).addInitParam("javax.ws.rs.Application", JerseyApp.class.getName())
+						.addMapping("/api/*"))
+				.addWelcomePage("index.html");
 
-        DeploymentManager manager = servletContainer.addDeployment(di);
-       
-        manager.deploy();
-        PathHandler path = Handlers.path(Handlers.redirect("/jaxrx"))
-                .addPrefixPath("/jaxrx", manager.start());
+		DeploymentManager manager = servletContainer.addDeployment(di);
 
-        server =
-                Undertow
-                        .builder()
-                        .addHttpListener(port, "localhost")
-                        .setHandler(path)
-                        .build();
+		manager.deploy();
+		PathHandler path = Handlers.path(Handlers.redirect("/jaxrx")).addPrefixPath("/jaxrx", manager.start());
 
-        server.start();
-    }
+		server = Undertow.builder().addHttpListener(port, "localhost").setHandler(path).build();
+
+		server.start();
+	}
 }
