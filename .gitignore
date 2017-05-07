@@ -165,3 +165,5 @@ modules.xml
 # End of https://www.gitignore.io/api/eclipse,intellij+iml
 
 spring-stormpath-oauth
+
+.DS_Store
