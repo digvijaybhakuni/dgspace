@@ -30,6 +30,10 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile('org.springframework:spring-messaging:4.2.4.RELEASE')
+	compile('com.fasterxml.jackson.core:jackson-core:2.7.3')
+	compile('com.fasterxml.jackson.core:jackson-databind:2.7.3')
+	compile('org.projectlombok:lombok:1.16.0')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
