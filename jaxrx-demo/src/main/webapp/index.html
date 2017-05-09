@@ -6,11 +6,11 @@
 	<ul id="result"></ul>
 	<div id="error"></div>
 
-	<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="http://code.jquery.com/jquery-1.12.4.js"></script>
 	<script>
 		(function($) {
 			function connect() {
-				var source = new EventSource("api/events/ssevents");
+				var source = new EventSource("/jaxrx/api/events/ssevents/789");
 				source.onmessage = function(event) {
 					$("#result").append("<li>"+event.data+"</li>")
 					console.log(event);
