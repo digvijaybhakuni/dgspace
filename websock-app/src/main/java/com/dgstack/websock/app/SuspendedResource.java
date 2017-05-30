@@ -7,6 +7,7 @@ package com.dgstack.websock.app;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import javax.annotation.Resource;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -21,8 +22,7 @@ import javax.ws.rs.container.Suspended;
 @Path("suspended")
 public class SuspendedResource {
     
-    @Inject
-    private Executor executor;
+    private final Executor executor = Executors.newCachedThreadPool();
     
     @GET
     @Path("/")
