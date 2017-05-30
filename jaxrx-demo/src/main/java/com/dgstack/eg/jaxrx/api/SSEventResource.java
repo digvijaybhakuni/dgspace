@@ -62,6 +62,7 @@ public class SSEventResource {
 	public EventOutput listenToBroadcast(final @PathParam("id") String id) {
 		final EventOutput eventOutput = new EventOutput();
 		//this.broadcaster.add(eventOutput);
+		
 		System.out.println("ID for event "+id);
 		EVENTMANAGER.put(id, eventOutput);
 		System.out.println("SIZE "+ EVENTMANAGER.size());

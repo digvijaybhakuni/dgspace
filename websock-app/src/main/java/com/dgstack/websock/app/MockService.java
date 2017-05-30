@@ -15,15 +15,15 @@ import java.util.logging.Logger;
  */
 public class MockService {
  
-    AtomicInteger  counter =new  AtomicInteger(1);
+    static AtomicInteger  counter =new  AtomicInteger(1);
     
     public String service(Object any){
         try {
-            Thread.sleep(10000);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(MockService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return (String.valueOf(any) + counter.getAndIncrement());
+        return (String.valueOf(any) + counter.incrementAndGet());
     }
     
 }
