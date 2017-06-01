@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>SSE Servlet</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div style="margin: auto; width: 500px;">
+            <h1>Test for SSE Servlet</h1>
+            <h3 id="event-h3"></h3>
+        </div>
+        <script>
+
+            (function () {
+
+                var ssefunc = function () {
+
+                    var source = new EventSource('SSEServlet');
+                    source.onopen = function (event) {
+                        console.log("eventsource opened!");
+                    };
+
+                    source.onmessage = function (event) {
+                        var data = event.data;
+                        console.log(data);
+                        document.getElementById('event-h3').innerHTML = "<em>"+ (new Date(parseInt(data))).toUTCString() + "</em>" ;
+                    };
+
+                }
+
+                window.addEventListener("load", ssefunc);
+            })();
+        </script>
+    </body>
+</html>
