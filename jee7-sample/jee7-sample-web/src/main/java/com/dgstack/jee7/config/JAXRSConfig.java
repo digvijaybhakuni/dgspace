@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dgstack.jee7.ejb;
+package com.dgstack.jee7.config;
 
-import javax.ejb.Remote;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
 /**
  *
  * @author digvijayb
  */
-//@Remote
-public interface ProjectEjbRemote {
-
-    boolean addProject(final String name);
+@ApplicationPath("api")
+public class JAXRSConfig extends Application{
     
 }

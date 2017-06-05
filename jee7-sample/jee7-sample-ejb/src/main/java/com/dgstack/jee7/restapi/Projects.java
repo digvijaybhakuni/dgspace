@@ -7,6 +7,7 @@ package com.dgstack.jee7.restapi;
 
 import com.dgstack.jee7.NewSessionBean;
 import com.dgstack.jee7.ejb.ProjectEjb;
+import com.dgstack.jee7.java.ParseJson;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -37,12 +38,29 @@ public class Projects {
     ProjectEjb projectBean;
 
     @GET
-    @Path("{name}") @Produces(MediaType.TEXT_HTML) 
+    @Path("name/{name}") @Produces(MediaType.TEXT_HTML) 
     public String name(@PathParam("name") String name) {
         
         bean.businessMethod();
         
-        return "name : " + name;
+        return "name DIGGU : " + name;
+    }
+    
+    @POST
+    @Path("submit")
+    @Consumes(MediaType.TEXT_PLAIN) 
+    @Produces(MediaType.TEXT_PLAIN)
+    public String test(final String postInput){
+        final ParseJson parseJson = new ParseJson();
+        parseJson.streamJson(postInput);
+        return "DONE";
+    }
+    
+    @GET
+    @Path("test")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String index(){
+        return "ReSR";
     }
     
     @GET
@@ -61,6 +79,8 @@ public class Projects {
         response.resume(projectBean.addProject(name));
         bean.businessMethod();
     }
+    
+    
                
 
 }
