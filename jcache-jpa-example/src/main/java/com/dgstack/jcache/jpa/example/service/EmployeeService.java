@@ -7,7 +7,10 @@ package com.dgstack.jcache.jpa.example.service;
 
 import com.dgstack.jcache.jpa.example.model.Employee;
 import java.util.List;
-import javax.persistence.Cacheable;
+import javax.cache.annotation.CacheKey;
+import javax.cache.annotation.CachePut;
+import javax.cache.annotation.CacheResult;
+import javax.cache.annotation.CacheValue;
 
 /**
  *
@@ -15,15 +18,18 @@ import javax.persistence.Cacheable;
  */
 public class EmployeeService {
     
-    public Employee getEmployeeById(){
+    @CacheResult(cacheName = "employee")
+    public Employee getEmployeeById(@CacheKey final Long id){
         return null;
     }
     
-    public List<Employee> getEmployeeByName(final String name){
+    @CacheResult(cacheName = "employeesByName")
+    public List<Employee> getEmployeeByName(@CacheKey final String name){
         return null;
     }
     
-    public Employee save(final Employee e){
+    @CachePut(cacheName = "employees")
+    public Employee save(@CacheValue final Employee e){
         return e;
     }
     
