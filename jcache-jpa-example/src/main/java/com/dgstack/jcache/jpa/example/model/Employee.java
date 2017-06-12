@@ -5,7 +5,10 @@
  */
 package com.dgstack.jcache.jpa.example.model;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -13,17 +16,18 @@ import javax.persistence.Id;
  * @author digvijayb
  */
 @Entity
-public class Employee {
+public class Employee implements Serializable {
+    
     @Id
-    private Long id;
+    private Integer id;
     private String name;
     private String department;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
