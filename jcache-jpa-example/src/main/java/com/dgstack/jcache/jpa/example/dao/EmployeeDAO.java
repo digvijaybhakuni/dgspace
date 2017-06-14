@@ -8,6 +8,7 @@ package com.dgstack.jcache.jpa.example.dao;
 import com.dgstack.jcache.jpa.example.PersistenceManager;
 import com.dgstack.jcache.jpa.example.model.Employee;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +20,7 @@ import javax.persistence.Query;
  *
  * @author digvijayb
  */
-@Named
+@Stateless
 public class EmployeeDAO {
     
     

@@ -17,14 +17,16 @@ import javax.cache.annotation.CachePut;
 import javax.cache.annotation.CacheResult;
 import javax.cache.annotation.CacheValue;
 import javax.cache.annotation.GeneratedCacheKey;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.jsr107.ri.annotations.DefaultCacheKeyGenerator;
 
 /**
  *
  * @author digvijayb
  */
-@Named
+@Stateless
 public class EmployeeService {
     
     @Inject
@@ -42,7 +44,7 @@ public class EmployeeService {
     }
     
     
-    private static class EmployeeNameCacheKeyGenerator implements CacheKeyGenerator{
+    public static class EmployeeNameCacheKeyGenerator implements CacheKeyGenerator{
 
         @Override
         public GeneratedCacheKey generateCacheKey(CacheKeyInvocationContext<? extends Annotation> cacheKeyInvocationContext) {
