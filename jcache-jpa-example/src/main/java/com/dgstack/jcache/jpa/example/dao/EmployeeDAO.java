@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
@@ -36,7 +37,11 @@ public class EmployeeDAO {
     
     public Employee save(final Employee e){
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
         em.persist(e);
+        em.flush();
+        transaction.commit();
         return e;
     }
     
