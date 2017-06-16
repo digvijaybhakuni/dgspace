@@ -19,6 +19,7 @@ import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
 import javax.cache.annotation.CacheValue;
 import javax.cache.annotation.GeneratedCacheKey;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,7 +30,7 @@ import org.jsr107.ri.annotations.DefaultGeneratedCacheKey;
  *
  * @author digvijayb
  */
-@Stateless
+@Stateful
 public class EmployeeService {
     
     @Inject

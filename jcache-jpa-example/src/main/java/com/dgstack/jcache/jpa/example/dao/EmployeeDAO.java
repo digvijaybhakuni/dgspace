@@ -8,7 +8,12 @@ package com.dgstack.jcache.jpa.example.dao;
 import com.dgstack.jcache.jpa.example.PersistenceManager;
 import com.dgstack.jcache.jpa.example.model.Employee;
 import java.util.List;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,26 +27,28 @@ import javax.persistence.Query;
  * @author digvijayb
  */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class EmployeeDAO {
     
-    
+    @PersistenceUnit(unitName = "jcache-jpa-example")
+    private EntityManagerFactory emf;
+        
     
     public List<Employee> findByName(final String name){
-        EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+        EntityManager em = emf.createEntityManager();
         final Query query = em.createQuery("SELECT e FROM Employee e WHERE e.name = :name");
         query.setParameter("name", name);
-        
         return  query.getResultList();
     } 
     
     
     public Employee save(final Employee e){
-        EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+        EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
+        //transaction.begin();
         em.persist(e);
         em.flush();
-        transaction.commit();
+        //transaction.commit();
         return e;
     }
     
