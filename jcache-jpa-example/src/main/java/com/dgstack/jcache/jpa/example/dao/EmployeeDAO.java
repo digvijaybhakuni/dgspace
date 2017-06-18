@@ -26,29 +26,46 @@ import javax.persistence.Query;
  *
  * @author digvijayb
  */
-@Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@Named
+//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class EmployeeDAO {
     
-    @PersistenceUnit(unitName = "jcache-jpa-example")
     private EntityManagerFactory emf;
+    
+    public EmployeeDAO(){
+        emf = PersistenceManager.INSTANCE.getEntityManagerFactory();
+    }
+    
         
     
     public List<Employee> findByName(final String name){
         EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
         final Query query = em.createQuery("SELECT e FROM Employee e WHERE e.name = :name");
         query.setParameter("name", name);
-        return  query.getResultList();
+        List resultList = query.getResultList();
+        transaction.commit();
+        return  resultList;
     } 
     
     
     public Employee save(final Employee e){
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = emf.createEntityManager();       
         EntityTransaction transaction = em.getTransaction();
-        //transaction.begin();
+        transaction.begin();
         em.persist(e);
         em.flush();
-        //transaction.commit();
+        transaction.commit();
+        return e;
+    }
+
+    public Employee findById(final Integer id) {
+        EntityManager em = emf.createEntityManager();       
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Employee e = em.find(Employee.class, id);
+        transaction.commit();
         return e;
     }
     

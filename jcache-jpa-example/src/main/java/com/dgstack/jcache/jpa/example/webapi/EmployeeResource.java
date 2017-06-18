@@ -8,8 +8,8 @@ package com.dgstack.jcache.jpa.example.webapi;
 import com.dgstack.jcache.jpa.example.model.Employee;
 import com.dgstack.jcache.jpa.example.service.EmployeeService;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -28,33 +28,37 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EmployeeResource {
-    
-    @Inject
+
+    @EJB
     private EmployeeService employeeService;
-    
-    
+
     @POST
-    @Path("save")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response save(final Employee emp){
-        
+    public Response save(final Employee emp) {
+
         System.out.println("com.dgstack.jcache.jpa.example.webapi.EmployeeResource.save()");
         System.out.println("from service");
         final Employee e = employeeService.save(emp);
-        
+
         return Response.ok(e).build();
     }
-    
-    
+
+    @Path("{id}")
+    @GET
+    public Response employeeById(@PathParam("id") final Integer id) {
+        System.out.println("com.dgstack.jcache.jpa.example.webapi.EmployeeResource.employeeById()");
+        final Employee e = employeeService.getEmployee(id);
+        return Response.ok(e).build();
+    }
+
     @Path("/name/{name}")
     @GET
-    public Response employeeByName(@PathParam("name") final String name){
-        
+    public Response employeeByName(@PathParam("name") final String name) {
+
         System.out.println("com.dgstack.jcache.jpa.example.webapi.EmployeeResource.employeeByName()");
-        System.out.println("from service");
         final List<Employee> employees = employeeService.getEmployeeByName(name);
-        
         return Response.ok(employees).build();
     }
-    
+
 }

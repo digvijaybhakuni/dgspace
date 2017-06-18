@@ -16,11 +16,11 @@ import org.jsr107.ri.annotations.DefaultGeneratedCacheKey;
 
 /**
  *
- * @author dbhakuni
+ * @author digvijayb
  */
-public class EmployeeNameCacheKeyGenerator implements CacheKeyGenerator {
+public class EmployeeIdCacheKeyGenerator implements CacheKeyGenerator {
 
-    private final static Logger LOG = Logger.getLogger("EmployeeNameCacheKeyGenerator");
+    private final static Logger LOG = Logger.getLogger("EmployeeIdCacheKeyGenerator");
 
     @Override
     public GeneratedCacheKey generateCacheKey(CacheKeyInvocationContext<? extends Annotation> cacheKeyInvocationContext) {
@@ -28,13 +28,11 @@ public class EmployeeNameCacheKeyGenerator implements CacheKeyGenerator {
         final CacheInvocationParameter[] params = cacheKeyInvocationContext.getAllParameters();
         for (final CacheInvocationParameter param : params) {
             if (Employee.class.equals(param.getRawType())) {
-                final String name = Employee.class.cast(param.getValue()).getName();
-                LOG.info("Employee >> " + name);
-                return new DefaultGeneratedCacheKey(new Object[]{name});
-            } else if (String.class.equals(param.getRawType())) {
-                LOG.info("String >> " + param.getValue());
-                String name = (String) param.getValue();
-                return new DefaultGeneratedCacheKey(new Object[]{name});
+                final Integer id = Employee.class.cast(param.getValue()).getId();
+                return new DefaultGeneratedCacheKey(new Object[]{id});
+            } else if (Integer.class.equals(param.getRawType())) {
+                Integer id = (Integer) param.getValue();
+                return new DefaultGeneratedCacheKey(new Object[]{id});
             }
         }
         throw new UnsupportedOperationException("Not supported yet.");

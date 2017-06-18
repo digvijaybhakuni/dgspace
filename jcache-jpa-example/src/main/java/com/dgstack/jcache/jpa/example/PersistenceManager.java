@@ -27,4 +27,8 @@ public enum PersistenceManager {
   public void close() {
     emFactory.close();
   }
+
+    public EntityManagerFactory getEntityManagerFactory() {
+        return emFactory;
+    }
 }

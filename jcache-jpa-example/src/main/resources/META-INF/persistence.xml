@@ -4,21 +4,26 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
   version="2.1">
   <persistence-unit name="jcache-jpa-example" transaction-type="RESOURCE_LOCAL">
   <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+<!--  <jta-data-source>jdbc/__default</jta-data-source>-->
+<!--  <class>com.dgstack.jcache.jpa.example.model.Employee</class>-->
   <properties>
-    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/test" />
+    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test" />
     <property name="javax.persistence.jdbc.user" value="temp" />
     <property name="javax.persistence.jdbc.password" value="temp" />
     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
     <property name="hibernate.show_sql" value="true" />
     <property name="hibernate.format_sql" value="true" />
-<!--    <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />-->
+    <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
     <property name="hibernate.hbm2ddl.auto" value="update" />
+    <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/test" />
+    <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
     <!-- Configuring Connection Pool -->
-    <property name="hibernate.c3p0.min_size" value="5" />
+<!--    <property name="hibernate.c3p0.min_size" value="5" />
     <property name="hibernate.c3p0.max_size" value="20" />
     <property name="hibernate.c3p0.timeout" value="500" />
     <property name="hibernate.c3p0.max_statements" value="50" />
-    <property name="hibernate.c3p0.idle_test_period" value="2000" />
+    <property name="hibernate.c3p0.idle_test_period" value="2000" />-->
+    <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
     </properties>
   </persistence-unit>
 </persistence>
