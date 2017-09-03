@@ -50,9 +50,7 @@ public class APIRequestRouter extends AbstractVerticle {
 
         final WebClient client = WebClient.create(vertx);
         final HttpRequest<Buffer> bufferHttpRequest = client.get(3000, "localhost", request.uri());
-        request.headers().forEach(e -> {
-            bufferHttpRequest.putHeader(e.getKey(), e.getValue());
-        });
+        request.headers().forEach(e -> bufferHttpRequest.putHeader(e.getKey(), e.getValue()));
 
 
         //.putHeader("Authorization", request.getHeader("Authorization"))
@@ -66,9 +64,7 @@ public class APIRequestRouter extends AbstractVerticle {
             if (asyncResult.succeeded()) {
                 System.out.println("DONE");
                 //final JsonObject jsonObject = asyncResult.result().bodyAsJsonObject();
-                result.headers().forEach(e -> {
-                    response.putHeader(e.getKey(), e.getValue());
-                });
+                result.headers().forEach(e -> response.putHeader(e.getKey(), e.getValue()));
                 response.setStatusCode(result.statusCode()).end(result.body());
             } else {
                 System.out.println("ERROR");
