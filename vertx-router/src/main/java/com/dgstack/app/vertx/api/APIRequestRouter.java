@@ -8,6 +8,7 @@ import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.Router;
 import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
@@ -21,8 +22,15 @@ public class APIRequestRouter extends AbstractVerticle {
 
     public void start() {
 
+        Router router = Router.router(vertx);
+
+        router.route("/api/").handler(event -> {
+            event.request();
+        });
 
         HttpServer server = vertx.createHttpServer();
+
+
 
         server.requestHandler(request -> {
 
