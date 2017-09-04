@@ -167,3 +167,5 @@ modules.xml
 spring-stormpath-oauth
 
 .DS_Store
+
+.vertx/
