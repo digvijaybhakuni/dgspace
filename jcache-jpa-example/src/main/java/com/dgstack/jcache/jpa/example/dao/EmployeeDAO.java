@@ -27,7 +27,6 @@ import javax.persistence.Query;
  * @author digvijayb
  */
 @Named
-//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class EmployeeDAO {
     
     private EntityManagerFactory emf;
@@ -51,6 +50,16 @@ public class EmployeeDAO {
     
     
     public Employee save(final Employee e){
+        EntityManager em = emf.createEntityManager();       
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.persist(e);
+        em.flush();
+        transaction.commit();
+        return e;
+    }
+    
+    public Employee update(final Employee e){
         EntityManager em = emf.createEntityManager();       
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
