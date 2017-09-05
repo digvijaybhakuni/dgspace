@@ -1,6 +1,7 @@
 package com.dgstack.app.vertx.api;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Launcher;
 import io.vertx.core.MultiMap;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.*;
@@ -19,16 +20,35 @@ import io.vertx.ext.web.handler.StaticHandler;
 public class APIRequestRouter extends AbstractVerticle {
 
 
+//    public static void main(String[] args) {
+//        Launcher.executeCommand("run com.dgstack.app.vertx.api.APIRequestRouter", args);
+//    }
+
     public void start() {
         System.out.println("START");
 
 
         Router router = Router.router(vertx);
-        router.route().handler(BodyHandler.create());
-        router.route("/api/users/*").handler(this::nodeReqHandler);
-        router.route("/api/world/*").handler(this::worldReqHandler);
+
+        Router apiRouter = Router.router(vertx);
+        apiRouter.route().handler(BodyHandler.create());
+        apiRouter.route("/users/*").handler(this::nodeReqHandler);
+        apiRouter.route("/auth").handler(this::nodeReqHandler);
+        apiRouter.route("/world/*").handler(this::worldReqHandler);
+
+        router.mountSubRouter("/api/", apiRouter);
 
         router.route().handler(StaticHandler.create());
+
+        router.route().failureHandler(routerContext -> {
+            System.out.println("failure Handler :: " + routerContext.statusCode());
+            if(routerContext.statusCode() != 404) {
+                System.out.println("Rerouting to root");
+                //routerContext.reroute("/");
+                routerContext.request().response();
+            }
+        });
+
         HttpServerOptions httpServerOptions = new HttpServerOptions();
         httpServerOptions.setCompressionSupported(true);
         vertx.createHttpServer(httpServerOptions).requestHandler(router::accept).listen(8081);
@@ -37,34 +57,23 @@ public class APIRequestRouter extends AbstractVerticle {
 
 
     private void nodeReqHandler(RoutingContext routingContext) {
-        // event.request();
         final HttpServerRequest request = routingContext.request();
-        System.out.println(routingContext.currentRoute().getPath());
-        System.out.println(request.uri());
-
+        //System.out.println(routingContext.currentRoute().getPath());
+        //System.out.println(request.uri());
         final WebClient client = WebClient.create(vertx);
-        System.out.println("CLIENT CREATED");
-        final HttpRequest<Buffer> bufferHttpRequest = client.request(request.method(), 3000, "localhost", request.uri());
-        System.out.println("REQ  CREATED " + request.method());
-        bufferHttpRequest.headers().addAll(request.headers());
-        System.out.println("HEADER SET");
-        //final JsonObject body = routingContext.getBodyAsJson();
-        final Buffer body = routingContext.getBody();
-        System.out.println("bodyAsJson = " + body.toString());
-        bufferHttpRequest.sendBuffer(body, asyncResult -> {
-            System.out.println("REQ SEND");
 
+        final HttpRequest<Buffer> bufferHttpRequest = client.request(request.method(), 3000, "localhost", request.uri());
+        bufferHttpRequest.headers().addAll(request.headers());
+        bufferHttpRequest.sendBuffer(routingContext.getBody(), asyncResult -> {
             final HttpServerResponse response = request.response();
             final HttpResponse<Buffer> result = asyncResult.result();
             if (asyncResult.succeeded()) {
-                System.out.println("DONE");
                 response.headers().addAll(result.headers());
                 response.setStatusCode(result.statusCode()).end(result.body());
             }else{
-                System.out.println("ERROR");
                 asyncResult.cause().printStackTrace(System.out);
                 System.out.println(result);
-                response.setStatusCode(404).end();
+                response.setStatusCode(500).end();
             }
         });
 
@@ -73,38 +82,22 @@ public class APIRequestRouter extends AbstractVerticle {
 
 
     private void worldReqHandler(RoutingContext routingContext) {
-        // event.request();
-        System.out.println("World");
         final HttpServerRequest request = routingContext.request();
-        System.out.println(routingContext.currentRoute().getPath());
-        System.out.println(request.uri());
+        //System.out.println(routingContext.currentRoute().getPath());
+        //System.out.println(request.uri());
 
         final WebClient client = WebClient.create(vertx);
-        System.out.println("CLIENT CREATED");
         final HttpRequest<Buffer> bufferHttpRequest = client.request(request.method(), 9090, "localhost", request.uri());
-        System.out.println("REQ  CREATED " + request.method());
         bufferHttpRequest.headers().addAll(request.headers());
-        System.out.println("HEADER SET");
-        //final JsonObject body = routingContext.getBodyAsJson();
-        final Buffer body = routingContext.getBody();
-        System.out.println("bodyAsJson = " + body.toString());
-        bufferHttpRequest.sendBuffer(body, asyncResult -> {
-            System.out.println("REQ SEND");
-
+        bufferHttpRequest.sendBuffer(routingContext.getBody(), asyncResult -> {
             final HttpServerResponse response = request.response();
             final HttpResponse<Buffer> result = asyncResult.result();
             if (asyncResult.succeeded()) {
-                System.out.println("DONE");
                 response.headers().addAll(result.headers());
-                result.headers().forEach(System.out::println);
-                System.out.println(result.bodyAsString());
-                System.out.println(result.statusCode());
                 response.setStatusCode(result.statusCode()).end(result.body());
             }else{
-                System.out.println("ERROR");
                 asyncResult.cause().printStackTrace(System.out);
-                System.out.println(result);
-                response.setStatusCode(404).end();
+                response.setStatusCode(500).end();
             }
         });
 
