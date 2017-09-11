@@ -1,0 +1,30 @@
+server:
+  port: 9093
+
+spring:
+  application:
+    name: zuul-gateway
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9092/eureka/
+  instance:
+    hostname: localhost
+
+#zuul.routes.demo.path=/demo/**
+#zuul.routes.demo.path.url=http://localhost:9091/
+
+
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /api
+  routes:
+    demo:
+      path: /demo/**
+      serviceId: DEMO-APP
+      #url: http://localhost:9091/
+    #hello-client:
+    #  path: /client/**
+    #  serviceId: HELLO-CLIENT
