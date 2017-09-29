@@ -142,6 +142,9 @@ local.properties
 # IntelliJ
 /out/
 
+auth-system/oauth2-resource-server/out/
+auth-system/oauth2-server-spring/out/
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
