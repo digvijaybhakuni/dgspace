@@ -1,7 +1,7 @@
 server:
   port: 9000
   contextPath: /oauht2spring
-security:
-  user:
-    name: bar
-    password: barsecret
+# security:
+#   user:
+#     name: bar
+#     password: barsecret

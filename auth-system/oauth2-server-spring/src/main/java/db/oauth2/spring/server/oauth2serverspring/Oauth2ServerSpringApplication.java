@@ -28,6 +28,15 @@ public class Oauth2ServerSpringApplication extends WebMvcConfigurerAdapter {
         SpringApplication.run(Oauth2ServerSpringApplication.class, args);
     }
 
+    // @Override
+    // public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    //    auth.inMemoryAuthentication().withUser("bill").password("abc123").roles("USER");
+    //    auth.inMemoryAuthentication().withUser("admin").password("root123").roles("ADMIN");
+    //    auth.inMemoryAuthentication().withUser("dba").password("root123").roles("ADMIN", "DBA");
+
+    //     //auth.authenticationProvider(espAuthenticationProvider());
+    // }
+
 
     @Configuration
     @EnableAuthorizationServer
@@ -61,6 +70,9 @@ public class Oauth2ServerSpringApplication extends WebMvcConfigurerAdapter {
                     .authorizedGrantTypes("authorization_code", "refresh_token", "password").scopes("openid");
         }
     }
+
+    
+    
 
 
     @RequestMapping("/user")
