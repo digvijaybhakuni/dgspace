@@ -1,0 +1,15 @@
+
+server:
+  port: 9100
+
+oidc:
+  client:
+    id: 1074069313096-en54stnpso957k58jt1mge0ih1ksl3lr.apps.googleusercontent.com
+    secret: c3yg7pJO8aVRgYEawI0TJba1
+  token:
+    issuer: accounts.google.com
+    jwkurl: https://www.googleapis.com/oauth2/v1/certs
+  accessTokenUri: https://oauth2.googleapis.com/token
+  userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+  redirectUri: http://localhost:9100/oidc_auth
+
