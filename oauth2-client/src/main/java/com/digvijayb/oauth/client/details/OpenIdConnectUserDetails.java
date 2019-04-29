@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -15,7 +16,7 @@ public class OpenIdConnectUserDetails implements UserDetails {
     private String username;
     private OAuth2AccessToken token;
 
-    private Collection<? extends GrantedAuthority>  authorities;
+    private Collection<? extends GrantedAuthority> authorities;
     private boolean auth = false;
 
     public OpenIdConnectUserDetails(Map<String, String> userInfo, OAuth2AccessToken token) {
@@ -25,6 +26,15 @@ public class OpenIdConnectUserDetails implements UserDetails {
         this.authorities = Collections.singletonList(new SimpleGrantedAuthority("USER"));
         this.auth = true;
     }
+
+    public OpenIdConnectUserDetails(OAuth2Authentication result, OAuth2AccessToken token) {
+        this.authorities = result.getAuthorities();
+        this.username = result.getName();
+        this.userId = result.getPrincipal().toString();
+        this.auth = true;
+        this.token = token;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
